@@ -1,24 +1,42 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import React, { useState } from "react";
 import { colors, defaultStyle } from "../styles/styles";
 import Header from "../components/Header";
-import { Avatar } from "react-native-paper";
+import { Avatar, Button } from "react-native-paper";
 
 const Home = () => {
+  const categories = [
+    { category: "Shirt", _id: "jsad-123123-dsafdf" },
+    { category: "Pants", _id: "ggas-46643-gjgjsd" },
+    { category: "Jeans", _id: "dnbcvn-435346-utkgh" },
+    { category: "Shoes", _id: "vbnvbn-546546-xvxcv" },
+    { category: "Jacket", _id: "hsxzz-8568-asdfgjh" },
+    { category: "Socks", _id: "idsf-55634-cxvtrt" },
+    { category: "Glasses", _id: "xzcyki-7344-ouyadds" },
+    { category: "Hat", _id: "ykjdwwer-63243-htku" },
+    { category: "Gloves", _id: "qweqwre-5465-lyuksdf" },
+  ];
+  const categoryButtonHandler = (id) => {
+    setCategory(id)
+  }
+  const [category, setCategory] = useState("")
   return (
     <View style={defaultStyle}>
       <Header />
 
-      <View style={{
-        paddingTop: 70,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
-      }}>
+      {/* Heading Row */}
+      <View
+        style={{
+          paddingTop: 70,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         {/* Heading */}
         <View>
           <Text style={{ fontSize: 25 }}>Our</Text>
-          <Text style={{ fontSize: 25, fontWeight: "900" }}>Product</Text>
+          <Text style={{ fontSize: 25, fontWeight: "900" }}>Products</Text>
         </View>
 
         {/* Search Bar */}
@@ -32,6 +50,42 @@ const Home = () => {
             />
           </TouchableOpacity>
         </View>
+      </View>
+
+      {/* Categories */}
+      <View
+        style={{
+          flexDirection: "row",
+          height: 80,
+        }}
+      >
+        <ScrollView horizontal 
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: "center"
+          }}
+        >
+          {categories.map((item, index) => (
+            <Button
+              key={item._id}
+              style={{
+                backgroundColor: category===item._id ? colors.color1 : colors.color5,
+                borderRadius: 100,
+                margin: 5,
+              }}
+              onPress={() => categoryButtonHandler(item._id)}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: category===item._id ? colors.color2 : "gray",
+                }}
+              >
+                {item.category}
+              </Text>
+            </Button>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );

@@ -2,8 +2,10 @@ import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { colors, defaultStyle } from "../styles/styles";
 import Header from "../components/Header";
+import { useNavigation } from "@react-navigation/native";
 import { Avatar, Button } from "react-native-paper";
 import SearchModal from "../components/SearchModal";
+import ProductCard from "../components/ProductCard";
 
 const categories = [
   { category: "Shirt", _id: "jsad-123123-dsafdf" },
@@ -16,18 +18,40 @@ const categories = [
   { category: "Hat", _id: "ykjdwwer-63243-htku" },
   { category: "Gloves", _id: "qweqwre-5465-lyuksdf" },
 ];
-const products = [{
-  price: 400000,
-  name: "Sandal",
-  _id: "0768665asdasd63423",
-  images: [{
-    url: "https://id-test-11.slatic.net/p/0f4476c6a7fdc326bc3c5b04a7641109.jpg"
-  }]
-}];
+const products = [
+  {
+    price: 400000,
+    stock: 23,
+    name: "Converse",
+    _id: "0768665asdasd63423",
+    images: [
+      {
+        url: "https://image.similarpng.com/thumbnail/2020/09/Converse-sneakers--Premium-vector-PNG.png",
+      },
+    ],
+  },
+  {
+    price: 400000,
+    stock: 23,
+    name: "Macbook",
+    _id: "0768655asdasd63423",
+    images: [
+      {
+        url: "https://image.similarpng.com/thumbnail/2020/09/Converse-sneakers--Premium-vector-PNG.png",
+      },
+    ],
+  },
+];
 const Home = () => {
+  const navigate = useNavigation();
+
   const categoryButtonHandler = (id) => {
     setCategory(id);
   };
+
+  const addToCardHandler = (id) => {
+    console.log("Add to Cart", id);
+  }
   const [category, setCategory] = useState("");
   const [activeSearch, setActiveSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -106,6 +130,25 @@ const Home = () => {
                   {item.category}
                 </Text>
               </Button>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* Products Card */}
+        <View style={{ flex: 1 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {products.map((item, index) => (
+              <ProductCard
+                stock={item.stock}
+                name={item.name}
+                price={item.price}
+                image={item.images[0]?.url}
+                addToCardHandler={addToCardHandler}
+                id={item._id}
+                key={item._id}
+                i={index}
+                navigate={navigate}
+              />
             ))}
           </ScrollView>
         </View>

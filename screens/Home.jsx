@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
-import { colors, defaultStyle } from "../styles/styles";
-import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import { Avatar, Button } from "react-native-paper";
+import { colors, defaultStyle } from "../styles/styles";
+import React, { useState } from "react";
+import Header from "../components/Header";
 import SearchModal from "../components/SearchModal";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";

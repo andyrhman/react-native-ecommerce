@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Avatar, Button } from "react-native-paper";
 import SearchModal from "../components/SearchModal";
 import ProductCard from "../components/ProductCard";
+import Footer from "../components/Footer";
 
 const categories = [
   { category: "Shirt", _id: "jsad-123123-dsafdf" },
@@ -66,6 +67,7 @@ const Home = () => {
         />
       )}
       <View style={defaultStyle}>
+        {/* Cart Icon */}
         <Header />
 
         {/* Heading Row */}
@@ -153,6 +155,9 @@ const Home = () => {
           </ScrollView>
         </View>
       </View>
+
+      {/* Footer */}
+      <Footer activeRoute={"home"}/>
     </>
   );
 };

@@ -7,7 +7,7 @@ import { colors, defaultStyle } from "../styles/styles";
 import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-const cartItems = [
+export const cartItems = [
   {
     name: "ReactJs",
     product: "0768665asdasd63423",
@@ -134,9 +134,9 @@ const Cart = () => {
 
       {/* Checkout button */}
       <TouchableOpacity
-      // onPress={
-      //   cartItems.length > 0 ? () => navigate.navigate("confirmorder") : null
-      // }
+      onPress={
+        cartItems.length > 0 ? () => navigate.navigate("confirmorder") : null
+      }
       >
         <Button
           style={{

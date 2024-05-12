@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Avatar, Button } from "react-native-paper";
 import { colors, defaultStyle } from "../styles/styles";
 import React, { useState } from "react";
+import Heading from "../components/Heading";
 import Header from "../components/Header";
 import SearchModal from "../components/SearchModal";
 import ProductCard from "../components/ProductCard";
@@ -23,22 +24,22 @@ const products = [
   {
     price: 400000,
     stock: 23,
-    name: "Converse",
+    name: "ReactJs",
     _id: "0768665asdasd63423",
     images: [
       {
-        url: "https://image.similarpng.com/thumbnail/2020/09/Converse-sneakers--Premium-vector-PNG.png",
+        url: "https://cdn1.iconfinder.com/data/icons/programing-development-8/24/react_logo-512.png",
       },
     ],
   },
   {
-    price: 400000,
+    price: 200000,
     stock: 23,
-    name: "Macbook",
+    name: "NestJs",
     _id: "0768655asdasd63423",
     images: [
       {
-        url: "https://image.similarpng.com/thumbnail/2020/09/Converse-sneakers--Premium-vector-PNG.png",
+        url: "https://static-00.iconduck.com/assets.00/nestjs-icon-2048x2040-3rrvcej8.png",
       },
     ],
   },
@@ -80,10 +81,7 @@ const Home = () => {
           }}
         >
           {/* Heading */}
-          <View>
-            <Text style={{ fontSize: 25 }}>Our</Text>
-            <Text style={{ fontSize: 25, fontWeight: "900" }}>Products</Text>
-          </View>
+          <Heading text1="Our" text2="Products" />
 
           {/* Search Bar */}
           <View>

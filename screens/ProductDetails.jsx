@@ -29,20 +29,20 @@ const ProductDetails = ({ route: { params } }) => {
   const images = [
     {
       id: "089708234qwdasd",
-      url: "https://cdn0-production-images-kly.akamaized.net/7f3byLchmG2U7Ca6uNHICwIg-H4=/800x450/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/3093628/original/008903900_1585930368-burrito-chicken-delicious-dinner-461198.jpg",
+      url: "https://cdn1.iconfinder.com/data/icons/programing-development-8/24/react_logo-512.png",
     },
     {
       id: "823647325asdxzczxc",
-      url: "https://www.dapurkobe.co.id/wp-content/uploads/kebab-sosis.jpg",
+      url: "https://w7.pngwing.com/pngs/359/101/png-transparent-aperture-laboratories-science-technology-laboratory-portal-science-blue-text-computer-thumbnail.png",
     },
   ];
   
-  const name = "Converse shoes";
+  const name = "ReactJs";
 
   const price = 400000;
 
   const description =
-    "A converse shoes that is looks nice to show off to your friends";
+    "A frontend web development tool that can make your website looks awesome";
 
   const stock = 5;
 

@@ -83,4 +83,4 @@ export const formStyles = StyleSheet.create({
 });
 
 export const defaultImg =
-  "https://p.kindpng.com/picc/s/451-4517876_default-profile-hd-png-download.png";
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1024px-Windows_10_Default_Profile_Picture.svg.png";

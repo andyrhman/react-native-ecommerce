@@ -3,15 +3,16 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../styles/styles";
 import { Avatar } from "react-native-paper";
+import { useSelector } from "react-redux";
 
-const Footer = ({ activateRoute = "home" }) => {
+const Footer = ({ activeRoute = "home" }) => {
   const navigate = useNavigation();
 
   const loading = false;
 
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
-  const navigationHandler = (key) => {
+  const navigatationHandler = (key) => {
     switch (key) {
       case 0:
         navigate.navigate("home");
@@ -36,6 +37,7 @@ const Footer = ({ activateRoute = "home" }) => {
       backgroundColor: colors.color1,
     },
   };
+
   return (
     loading === false && (
       <View
@@ -43,6 +45,9 @@ const Footer = ({ activateRoute = "home" }) => {
           backgroundColor: colors.color1,
           borderTopRightRadius: 120,
           borderTopLeftRadius: 120,
+          position: "absolute",
+          width: "100%",
+          bottom: 0,
         }}
       >
         <View
@@ -53,21 +58,28 @@ const Footer = ({ activateRoute = "home" }) => {
         >
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigationHandler(1)}
+            onPress={() => navigatationHandler(1)}
           >
             <Avatar.Icon
               {...avatarOptions}
-              icon={activateRoute === "cart" ? "shopping" : "shopping-outline"}
-            ></Avatar.Icon>
+              icon={activeRoute === "cart" ? "shopping" : "shopping-outline"}
+            />
           </TouchableOpacity>
+
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigationHandler(2)}
+            onPress={() => navigatationHandler(2)}
           >
             <Avatar.Icon
               {...avatarOptions}
-              icon={activateRoute === "cart" ? "account" : "account-outline"}
-            ></Avatar.Icon>
+              icon={
+                isAuthenticated === false
+                  ? "login"
+                  : activeRoute === "profile"
+                  ? "account"
+                  : "account-outline"
+              }
+            />
           </TouchableOpacity>
         </View>
 
@@ -93,12 +105,12 @@ const Footer = ({ activateRoute = "home" }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigationHandler(0)}
+              onPress={() => navigatationHandler(0)}
             >
               <Avatar.Icon
                 {...avatarOptions}
-                icon={activateRoute === "home" ? "home" : "home-outline"}
-              ></Avatar.Icon>
+                icon={activeRoute === "home" ? "home" : "home-outline"}
+              />
             </TouchableOpacity>
           </View>
         </View>

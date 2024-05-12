@@ -20,7 +20,9 @@ const ForgetPassword = ({ navigation }) => {
 //   const loading = useMessageAndErrorOther(dispatch, navigation, "verify");
 
   const submitHandler = () => {
+    alert("H");
     // dispatch(forgetPassword(email));
+    navigation.navigate("verify");
   };
   return (
     <>

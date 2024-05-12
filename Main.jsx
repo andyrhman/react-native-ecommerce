@@ -3,11 +3,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import ProductDetails from "./screens/ProductDetails";
 import Home from "./screens/Home";
-import Cart from "./screens/Cart"
+import Cart from "./screens/Cart";
 import Toast from "react-native-toast-message";
 import ConfirmOrder from "./screens/ConfirmOrder";
 import Payment from "./screens/Payment";
 import Login from "./screens/Login";
+import ForgetPassword from "./screens/ForgetPassword";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,9 @@ const Main = () => {
           <Stack.Screen name="confirmorder" component={ConfirmOrder} />
           <Stack.Screen name="payment" component={Payment} />
           <Stack.Screen name="login" component={Login} />
+
+          {/* Password Resetting Route */}
+          <Stack.Screen name="forgetpassword" component={ForgetPassword} />
         </Stack.Group>
       </Stack.Navigator>
       <Toast position="top" />

@@ -20,11 +20,12 @@ const categories = [
   { category: "Hat", _id: "ykjdwwer-63243-htku" },
   { category: "Gloves", _id: "qweqwre-5465-lyuksdf" },
 ];
-const products = [
+export const products = [
   {
     price: 400000,
     stock: 23,
     name: "ReactJs",
+    category: "jsad-123123-dsafdf",
     _id: "0768665asdasd63423",
     images: [
       {
@@ -36,6 +37,7 @@ const products = [
     price: 200000,
     stock: 23,
     name: "NestJs",
+    category: "ggas-46643-gjgjsd",
     _id: "0768655asdasd63423",
     images: [
       {

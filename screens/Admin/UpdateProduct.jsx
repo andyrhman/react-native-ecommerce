@@ -99,7 +99,7 @@ const UpdateProduct = ({ navigation, route }) => {
                 onPress={() =>
                   navigation.navigate("productimages", {
                     id,
-                    images: product.images,
+                    // images: product.images,
                   })
                 }
                 textColor={colors.color1}

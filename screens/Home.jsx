@@ -9,7 +9,7 @@ import SearchModal from "../components/SearchModal";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
 
-const categories = [
+export const categories = [
   { category: "Shirt", _id: "jsad-123123-dsafdf" },
   { category: "Pants", _id: "ggas-46643-gjgjsd" },
   { category: "Jeans", _id: "dnbcvn-435346-utkgh" },

@@ -57,9 +57,9 @@ const NewProduct = ({ navigation, route }) => {
 //   const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
   const loading = false;
 
-//   useEffect(() => {
-//     if (route.params?.image) setImage(route.params.image);
-//   }, [route.params]);
+  useEffect(() => {
+    if (route.params?.image) setImage(route.params.image);
+  }, [route.params]);
 
   return (
     <>

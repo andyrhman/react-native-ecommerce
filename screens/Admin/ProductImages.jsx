@@ -50,12 +50,12 @@ const ProductImages = ({ navigation, route }) => {
     // dispatch(updateProductImage(productId, myForm));
   };
 
-//   useEffect(() => {
-//     if (route.params?.image) {
-//       setImage(route.params.image);
-//       setImageChanged(true);
-//     }
-//   }, [route.params]);
+  useEffect(() => {
+    if (route.params?.image) {
+      setImage(route.params.image);
+      setImageChanged(true);
+    }
+  }, [route.params]);
 
   return (
     <View

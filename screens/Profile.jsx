@@ -27,7 +27,8 @@ const Profile = ({ navigation, route }) => {
     email: "test@mail.com",
     role: "admin",
   };
-  const [avatar, setAvatar] = useState(defaultImg);
+  // const [avatar, setAvatar] = useState(defaultImg);
+  const [avatar, setAvatar] = useState(null);
 
   // const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -81,12 +82,17 @@ const Profile = ({ navigation, route }) => {
   //     dispatch(loadUser());
   //   }, [route.params, dispatch, isFocused]);
 
-  //   useEffect(() => {
-  //     if (user?.avatar) {
-  //       setAvatar(user.avatar.url);
-  //     }
-  //   }, [user]);
+    // useEffect(() => {
+    //   if (user?.avatar) {
+    //     setAvatar(user.avatar.url);
+    //   }
+    // }, [user]);
 
+    useEffect(() => {
+      if (route.params?.image) {
+        setAvatar(route.params.image);
+      }
+    }, [route.params]);
   return (
     <>
       <View style={defaultStyle}>

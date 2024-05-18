@@ -54,9 +54,9 @@ const SignUp = ({ navigation, route }) => {
 
 //   const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
 
-//   useEffect(() => {
-//     if (route.params?.image) setAvatar(route.params.image);
-//   }, [route.params]);
+  useEffect(() => {
+    if (route.params?.image) setAvatar(route.params.image);
+  }, [route.params]);
   return (
     <>
       <View style={defaultStyle}>

@@ -1,46 +1,33 @@
 import { View, Text, ScrollView } from "react-native";
 import React from "react";
-import { colors, defaultStyle, formHeading } from "../styles/styles";
-import Header from "../components/Header";
-import Loader from "../components/Loader";
-import { Headline } from "react-native-paper";
-import OrderItem from "../components/OrderItem";
-// import { useGetOrders } from "../utils/hooks";
+import { colors, defaultStyle, formHeading } from "../../styles/styles";
+import Header from "../../components/Header";
+import Loader from "../../components/Loader";
+import OrderItem from "../../components/OrderItem";
+// import { useGetOrders, useMessageAndErrorOther } from "../../utils/hooks";
 import { useIsFocused } from "@react-navigation/native";
+import { Headline } from "react-native-paper";
+import { useDispatch } from "react-redux";
+// import { processOrder } from "../../redux/actions/otherAction";
 
-export const orders = [
-    {
-        _id: "76782374asdasdsf",
-        shippingInfo: {
-            address: "0231 street",
-            city: "Houston",
-            country: "USA",
-            pinCode: 784724
-        },
-        createdAt: "24-04-2024T1234",
-        orderStatus: "Processing",
-        paymentMethod: "COD",
-        totalAmount: 40000
-    },
-    {
-        _id: "76784444asdasdsf",
-        shippingInfo: {
-            address: "444 street",
-            city: "Kansas",
-            country: "USA",
-            pinCode: 53123
-        },
-        createdAt: "24-04-2024T1234",
-        orderStatus: "Completed",
-        paymentMethod: "ONLINE",
-        totalAmount: 50000
-    }
-]
-const Orders = () => {
-  //   const isFocused = useIsFocused();
-  //   const { loading, orders } = useGetOrders(isFocused);
-  const loading = false;
+import { orders } from "../Orders";
 
+const AdminOrders = ({ navigation }) => {
+//   const isFocused = useIsFocused();
+//   const dispatch = useDispatch();
+
+//   const { loading, orders } = useGetOrders(isFocused, true);
+    const loading = false;
+
+//   const processOrderLoading = useMessageAndErrorOther(
+//     dispatch,
+//     navigation,
+//     "adminpanel"
+//   );
+
+  const updateHandler = (id) => {
+    // dispatch(processOrder(id));
+  };
   return (
     <View
       style={{
@@ -52,7 +39,7 @@ const Orders = () => {
 
       {/* Heading */}
       <View style={{ marginBottom: 20, paddingTop: 70 }}>
-        <Text style={formHeading}>Orders</Text>
+        <Text style={formHeading}>All Orders</Text>
       </View>
 
       {loading ? (
@@ -76,6 +63,9 @@ const Orders = () => {
                   paymentMethod={item.paymentMethod}
                   orderedOn={item.createdAt.split("T")[0]}
                   address={`${item.shippingInfo.address}, ${item.shippingInfo.city}, ${item.shippingInfo.country} ${item.shippingInfo.pinCode}`}
+                  admin={true}
+                  updateHandler={updateHandler}
+                //   loading={processOrderLoading}
                 />
               ))
             ) : (
@@ -88,4 +78,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default AdminOrders;

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   colors,
   defaultStyle,
@@ -9,20 +9,21 @@ import {
 } from "../styles/styles";
 import { Button, TextInput } from "react-native-paper";
 import Footer from "../components/Footer";
-// import { useDispatch } from "react-redux";
-// import { login } from "../redux/actions/userActions";
-// import { useMessageAndErrorUser } from "../utils/hooks";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/actions/userActions";
+import { useMessageAndErrorUser } from "../utils/hooks";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-//   const dispatch = useDispatch();
-//   const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
+  const dispatch = useDispatch();
+  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
 
-//   const submitHandler = () => {
-//     dispatch(login(email, password));
-//   };
+  const submitHandler = () => {
+    dispatch(login(email, password));
+  };
+
   return (
     <>
       <View style={defaultStyle}>
@@ -56,11 +57,11 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
 
           <Button
-            // loading={loading}
-            labelStyle={{color: colors.color2}}
+            loading={loading}
+            labelStyle={{ color: colors.color2 }}
             disabled={email === "" || password === ""}
             style={styles.btn}
-            // onPress={submitHandler}
+            onPress={submitHandler}
           >
             Log In
           </Button>

@@ -11,32 +11,26 @@ import ButtonBox from "../components/ButtonBox";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
-// import { loadUser, logout } from "../redux/actions/userActions";
-// import {
-//   useMessageAndErrorOther,
-//   useMessageAndErrorUser,
-// } from "../utils/hooks";
+import { loadUser, logout } from "../redux/actions/userActions";
+import {
+  useMessageAndErrorOther,
+  useMessageAndErrorUser,
+} from "../utils/hooks";
 import { useIsFocused } from "@react-navigation/native";
 import mime from "mime";
 // import { updatePic } from "../redux/actions/otherAction";
 
 const Profile = ({ navigation, route }) => {
-  //   const { user } = useSelector((state) => state.user);
-  const user = {
-    name: "test",
-    email: "test@mail.com",
-    role: "admin",
-  };
-  // const [avatar, setAvatar] = useState(defaultImg);
+  const { user } = useSelector((state) => state.user);
+
   const [avatar, setAvatar] = useState(null);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
-  //   const loading = useMessageAndErrorUser(navigation, dispatch, "login");
-  const loading = false;
+  const loading = useMessageAndErrorUser(navigation, dispatch, "login");
   const logoutHandler = () => {
-    // dispatch(logout());
+    dispatch(logout());
   };
 
   const navigateHandler = (text) => {
@@ -82,17 +76,17 @@ const Profile = ({ navigation, route }) => {
   //     dispatch(loadUser());
   //   }, [route.params, dispatch, isFocused]);
 
-    // useEffect(() => {
-    //   if (user?.avatar) {
-    //     setAvatar(user.avatar.url);
-    //   }
-    // }, [user]);
+  useEffect(() => {
+    if (user?.avatar) {
+      setAvatar(user.avatar.url);
+    }
+  }, [user]);
 
-    useEffect(() => {
-      if (route.params?.image) {
-        setAvatar(route.params.image);
-      }
-    }, [route.params]);
+  useEffect(() => {
+    if (route.params?.image) {
+      setAvatar(route.params.image);
+    }
+  }, [route.params]);
   return (
     <>
       <View style={defaultStyle}>

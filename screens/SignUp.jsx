@@ -11,9 +11,9 @@ import {
 import { Avatar, Button, TextInput } from "react-native-paper";
 import Footer from "../components/Footer";
 import mime from "mime";
-// import { useDispatch } from "react-redux";
-// import { register } from "../redux/actions/userActions";
-// import { useMessageAndErrorUser } from "../utils/hooks";
+import { useDispatch } from "react-redux";
+import { register } from "../redux/actions/userActions";
+import { useMessageAndErrorUser } from "../utils/hooks";
 
 const SignUp = ({ navigation, route }) => {
   const [avatar, setAvatar] = useState("");
@@ -25,7 +25,7 @@ const SignUp = ({ navigation, route }) => {
   const [country, setCountry] = useState("");
   const [pinCode, setPinCode] = useState("");
 
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const disableBtn =
     !name || !email || !password || !address || !city || !country || !pinCode;
@@ -49,14 +49,15 @@ const SignUp = ({ navigation, route }) => {
       });
     }
 
-    // dispatch(register(myForm));
+    dispatch(register(myForm));
   };
 
-//   const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
+  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
 
   useEffect(() => {
     if (route.params?.image) setAvatar(route.params.image);
   }, [route.params]);
+
   return (
     <>
       <View style={defaultStyle}>
@@ -139,7 +140,7 @@ const SignUp = ({ navigation, route }) => {
             />
 
             <Button
-            //   loading={loading}
+              loading={loading}
               textColor={colors.color2}
               disabled={disableBtn}
               style={styles.btn}

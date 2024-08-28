@@ -22,10 +22,20 @@ import UpdateProduct from "./screens/Admin/UpdateProduct";
 import NewProduct from "./screens/Admin/NewProduct";
 import ProductImages from "./screens/Admin/ProductImages";
 import Camera from "./screens/Camera";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./redux/actions/userActions";
+import { useEffect } from "react";
 
 const Stack = createNativeStackNavigator();
 
 const Main = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
   return (
     <NavigationContainer>
       <Stack.Navigator

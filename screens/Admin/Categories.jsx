@@ -14,32 +14,30 @@ import {
 } from "../../styles/styles";
 import Header from "../../components/Header";
 import { Avatar, Button, TextInput } from "react-native-paper";
-//   import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
+import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
 import { useIsFocused } from "@react-navigation/native";
-//   import { useDispatch } from "react-redux";
-//   import { addCategory, deleteCategory } from "../../redux/actions/otherAction";
-
-import { categories } from "../Home";
+import { useDispatch } from "react-redux";
+import { addCategory, deleteCategory } from "../../redux/actions/otherActions";
 
 const Categories = ({ navigation }) => {
-    const category = "Shoes";
-  // const [category, setCategory] = useState("");
-  // const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
 
-  // const isFocused = useIsFocused();
-  // const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
 
-  // useSetCategories(setCategories, isFocused);
+  useSetCategories(setCategories, isFocused);
 
-  // const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
-  const loading = false;
+  const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
 
   const deleteHandler = (id) => {
-    //   dispatch(deleteCategory(id));
+    dispatch(deleteCategory(id));
+    navigation.push('categories');
   };
 
   const submitHandler = () => {
-    //   dispatch(addCategory(category));
+    dispatch(addCategory(category));
+    navigation.push('categories');
   };
 
   return (
@@ -79,7 +77,7 @@ const Categories = ({ navigation }) => {
           {...inputOptions}
           placeholder="Category"
           value={category}
-        //   onChangeText={setCategory}
+          onChangeText={setCategory}
         />
 
         <Button
@@ -91,7 +89,7 @@ const Categories = ({ navigation }) => {
           }}
           loading={loading}
           disabled={!category}
-        //   onPress={submitHandler}
+          onPress={submitHandler}
         >
           Add
         </Button>

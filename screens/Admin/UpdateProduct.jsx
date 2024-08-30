@@ -11,21 +11,18 @@ import {
 import Loader from "../../components/Loader";
 import { Button, TextInput } from "react-native-paper";
 import SelectComponent from "../../components/SelectComponent";
-// import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
+import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
 import { useIsFocused } from "@react-navigation/native";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getProductDetails } from "../../redux/actions/productAction";
-// import { updateProduct } from "../../redux/actions/otherAction";
-
-import { categories } from "../Home";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductDetails } from "../../redux/actions/productActions";
+import { updateProduct } from "../../redux/actions/otherActions";
 
 const UpdateProduct = ({ navigation, route }) => {
-//   const isFocused = useIsFocused();
-//   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
 
-//   const { product, loading } = useSelector((state) => state.product);
-    const loading = false;
+  const { product, loading } = useSelector((state) => state.product);
 
   const [id] = useState(route.params.id);
   const [name, setName] = useState("");
@@ -34,34 +31,34 @@ const UpdateProduct = ({ navigation, route }) => {
   const [stock, setStock] = useState("");
   const [category, setCategory] = useState("");
   const [categoryID, setCategoryID] = useState("");
-//   const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-//   useSetCategories(setCategories, isFocused);
+  useSetCategories(setCategories, isFocused);
 
   const submitHandler = () => {
-    // dispatch(updateProduct(id, name, description, price, stock, categoryID));
+    dispatch(updateProduct(id, name, description, price, stock, categoryID));
   };
-  const loadingOther = false;
-//   const loadingOther = useMessageAndErrorOther(
-//     dispatch,
-//     navigation,
-//     "adminpanel"
-//   );
 
-//   useEffect(() => {
-//     dispatch(getProductDetails(id));
-//   }, [dispatch, id, isFocused]);
+  const loadingOther = useMessageAndErrorOther(
+    dispatch,
+    navigation,
+    "adminpanel"
+  );
 
-//   useEffect(() => {
-//     if (product) {
-//       setName(product.name);
-//       setDescription(product.description);
-//       setPrice(String(product.price));
-//       setStock(String(product.stock));
-//       setCategory(product.category?.category);
-//       setCategoryID(product.category?._id);
-//     }
-//   }, [product]);
+  useEffect(() => {
+    dispatch(getProductDetails(id));
+  }, [dispatch, id, isFocused]);
+
+  useEffect(() => {
+    if (product) {
+      setName(product.name);
+      setDescription(product.description);
+      setPrice(String(product.price));
+      setStock(String(product.stock));
+      setCategory(product.category?.category);
+      setCategoryID(product.category?._id);
+    }
+  }, [product]);
 
   return (
     <>
@@ -99,7 +96,7 @@ const UpdateProduct = ({ navigation, route }) => {
                 onPress={() =>
                   navigation.navigate("productimages", {
                     id,
-                    // images: product.images,
+                    images: product.images,
                   })
                 }
                 textColor={colors.color1}

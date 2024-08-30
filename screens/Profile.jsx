@@ -26,6 +26,8 @@ const Profile = ({ navigation, route }) => {
   const [avatar, setAvatar] = useState(null);
 
   const dispatch = useDispatch();
+  // ? Use useIsFocused for automatic Data Refresh
+  // ? do this only for data that is always changing
   const isFocused = useIsFocused();
 
   const loading = useMessageAndErrorUser(navigation, dispatch, "login");

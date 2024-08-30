@@ -79,6 +79,8 @@ export const useMessageAndErrorOther = (
   return loading;
 };
 
+// ? Use useIsFocused for automatic Data Refresh
+// ? do this only for data that is always changing
 export const useSetCategories = (setCategories, isFocused) => {
   useEffect(() => {
     axios
@@ -95,6 +97,8 @@ export const useSetCategories = (setCategories, isFocused) => {
   }, [isFocused]);
 };
 
+// ? Use useIsFocused for automatic Data Refresh
+// ? do this only for data that is always changing
 export const useGetOrders = (isFocused, isAdmin = false) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -121,6 +125,8 @@ export const useGetOrders = (isFocused, isAdmin = false) => {
   };
 };
 
+// ? Use useIsFocused for automatic Data Refresh
+// ? do this only for data that is always changing
 export const useAdminProducts = (dispatch, isFocused) => {
   const { products, inStock, outOfStock, error, loading } = useSelector(
     (state) => state.product

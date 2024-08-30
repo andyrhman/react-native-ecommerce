@@ -10,17 +10,17 @@ import {
 } from "../../styles/styles";
 import { Avatar, Button, TextInput } from "react-native-paper";
 import SelectComponent from "../../components/SelectComponent";
-// import { useSetCategories, useMessageAndErrorOther } from "../../utils/hooks";
+import { useSetCategories, useMessageAndErrorOther } from "../../utils/hooks";
 import { useIsFocused } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import mime from "mime";
-// import { createProduct } from "../../redux/actions/otherAction";
+import { createProduct } from "../../redux/actions/otherActions";
 
 import { categories } from "../Home";
 
 const NewProduct = ({ navigation, route }) => {
-//   const isFocused = useIsFocused();
-//   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
 
   const [image, setImage] = useState("");
@@ -30,32 +30,31 @@ const NewProduct = ({ navigation, route }) => {
   const [stock, setStock] = useState("");
   const [category, setCategory] = useState("Choose Category");
   const [categoryID, setCategoryID] = useState(undefined);
-//   const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-//   useSetCategories(setCategories, isFocused);
+  useSetCategories(setCategories, isFocused);
 
   const disableBtnCondition =
     !name || !description || !price || !stock || !image;
 
   const submitHandler = () => {
-    // const myForm = new FormData();
-    // myForm.append("name", name);
-    // myForm.append("description", description);
-    // myForm.append("price", price);
-    // myForm.append("stock", stock);
-    // myForm.append("file", {
-    //   uri: image,
-    //   type: mime.getType(image),
-    //   name: image.split("/").pop(),
-    // });
+    const myForm = new FormData();
+    myForm.append("name", name);
+    myForm.append("description", description);
+    myForm.append("price", price);
+    myForm.append("stock", stock);
+    myForm.append("file", {
+      uri: image,
+      type: mime.getType(image),
+      name: image.split("/").pop(),
+    });
 
-    // if (categoryID) myForm.append("category", categoryID);
+    if (categoryID) myForm.append("category", categoryID);
 
-    // dispatch(createProduct(myForm));
+    dispatch(createProduct(myForm));
   };
 
-//   const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
-  const loading = false;
+  const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
 
   useEffect(() => {
     if (route.params?.image) setImage(route.params.image);
@@ -167,7 +166,7 @@ const NewProduct = ({ navigation, route }) => {
             </Text>
 
             <Button
-              labelStyle={{color: colors.color2}}
+              labelStyle={{ color: colors.color2 }}
               style={{
                 backgroundColor: colors.color1,
                 margin: 20,

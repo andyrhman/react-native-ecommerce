@@ -5,41 +5,14 @@ import Header from "../components/Header";
 import Loader from "../components/Loader";
 import { Headline } from "react-native-paper";
 import OrderItem from "../components/OrderItem";
-// import { useGetOrders } from "../utils/hooks";
+import { useGetOrders } from "../utils/hooks";
 import { useIsFocused } from "@react-navigation/native";
 
-export const orders = [
-    {
-        _id: "76782374asdasdsf",
-        shippingInfo: {
-            address: "0231 street",
-            city: "Houston",
-            country: "USA",
-            pinCode: 784724
-        },
-        createdAt: "24-04-2024T1234",
-        orderStatus: "Processing",
-        paymentMethod: "COD",
-        totalAmount: 40000
-    },
-    {
-        _id: "76784444asdasdsf",
-        shippingInfo: {
-            address: "444 street",
-            city: "Kansas",
-            country: "USA",
-            pinCode: 53123
-        },
-        createdAt: "24-04-2024T1234",
-        orderStatus: "Completed",
-        paymentMethod: "ONLINE",
-        totalAmount: 50000
-    }
-]
 const Orders = () => {
-  //   const isFocused = useIsFocused();
-  //   const { loading, orders } = useGetOrders(isFocused);
-  const loading = false;
+  const isFocused = useIsFocused();
+  // ? Use useIsFocused for automatic Data Refresh
+  // ? do this only for data that is always changing
+  const { loading, orders } = useGetOrders(isFocused);
 
   return (
     <View

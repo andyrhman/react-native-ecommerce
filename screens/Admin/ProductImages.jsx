@@ -4,50 +4,42 @@ import { colors, defaultStyle, formHeading } from "../../styles/styles";
 import Header from "../../components/Header";
 import ImageCard from "../../components/ImageCard";
 import { Avatar, Button } from "react-native-paper";
-// import { useMessageAndErrorOther } from "../../utils/hooks";
+import { useMessageAndErrorOther } from "../../utils/hooks";
 import { useDispatch } from "react-redux";
 import mime from "mime";
-// import {
-//   deleteProductImage,
-//   updateProductImage,
-// } from "../../redux/actions/otherAction";
-
-const images = [
-    {
-        _id: "868796asdasd",
-        url: "https://cdn1.iconfinder.com/data/icons/programing-development-8/24/react_logo-512.png",
-    },
-    {
-        _id: "43534596asdasd",
-        url: "https://static-00.iconduck.com/assets.00/nestjs-icon-2048x2040-3rrvcej8.png",
-    }
-]
+import {
+  deleteProductImage,
+  updateProductImage,
+} from "../../redux/actions/otherActions";
 
 const ProductImages = ({ navigation, route }) => {
-//   const [images] = useState(route.params.images);
-//   const [productId] = useState(route.params.id);
+  const [images] = useState(route.params.images);
+  const [productId] = useState(route.params.id);
   const [image, setImage] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
 
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-//   const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
-    const loading = false;
+  const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
 
   const deleteHandler = (imageId) => {
-    // dispatch(deleteProductImage(productId, imageId));
+    dispatch(deleteProductImage(productId, imageId));
   };
 
   const submitHandler = () => {
-    // const myForm = new FormData();
+    try {
+      const myForm = new FormData();
 
-    // myForm.append("file", {
-    //   uri: image,
-    //   type: mime.getType(image),
-    //   name: image.split("/").pop(),
-    // });
+      myForm.append("file", {
+        uri: image,
+        type: mime.getType(image),
+        name: image.split("/").pop(),
+      });
 
-    // dispatch(updateProductImage(productId, myForm));
+      dispatch(updateProductImage(productId, myForm));
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   useEffect(() => {

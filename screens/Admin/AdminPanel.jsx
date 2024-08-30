@@ -7,25 +7,20 @@ import ButtonBox from "../../components/ButtonBox";
 import ProductListHeading from "../../components/ProductListHeading";
 import ProductListItem from "../../components/ProductListItem";
 import Chart from "../../components/Chart";
-// import { useAdminProducts, useMessageAndErrorOther } from "../../utils/hooks";
-// import { useDispatch } from "react-redux";
+import { useAdminProducts, useMessageAndErrorOther } from "../../utils/hooks";
+import { useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
-// import { deleteProduct } from "../../redux/actions/otherAction";
-// import { getAdminProducts } from "../../redux/actions/productAction";
-
-import { products } from "../Home";
+import { deleteProduct } from "../../redux/actions/otherActions";
+import { getAdminProducts } from "../../redux/actions/productActions";
 
 const AdminPanel = ({ navigation }) => {
-  const loading = false;
-  //   const dispatch = useDispatch();
-  //   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
-  //   const { loading, products, inStock, outOfStock } = useAdminProducts(
-  //     dispatch,
-  //     isFocused
-  //   );
-  const inStock = 12;
-  const outOfStock = 2;
+  const { loading, products, inStock, outOfStock } = useAdminProducts(
+    dispatch,
+    isFocused
+  );
   const navigationHandler = (text) => {
     switch (text) {
       case "Category":
@@ -45,17 +40,18 @@ const AdminPanel = ({ navigation }) => {
   };
 
   const deleteProductHandler = (id) => {
-    //   dispatch(deleteProduct(id));
-    console.log("product deleted");
+    dispatch(deleteProduct(id));
+    // setTimeout(() => {
+    //   navigation.push("adminpanel")
+    // }, 3000);
   };
 
-  //   const loadingDelete = useMessageAndErrorOther(
-  //     dispatch,
-  //     null,
-  //     null,
-  //     getAdminProducts
-  //   );
-  const loadingDelete = false;
+  const loadingDelete = useMessageAndErrorOther(
+    dispatch,
+    null,
+    null,
+    getAdminProducts
+  );
   return (
     <View style={defaultStyle}>
       <Header back={true} />
@@ -121,8 +117,7 @@ const AdminPanel = ({ navigation }) => {
                     price={item.price}
                     stock={item.stock}
                     name={item.name}
-                    // category={item.category?.category}
-                    category={item.category}
+                    category={item.category?.category}
                     imgSrc={item.images[0].url}
                   />
                 ))}

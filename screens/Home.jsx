@@ -1,64 +1,68 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Avatar, Button } from "react-native-paper";
-import { colors, defaultStyle } from "../styles/styles";
-import React, { useState } from "react";
-import Heading from "../components/Heading";
+import React, { useEffect, useState } from "react";
+import { defaultStyle, colors } from "../styles/styles";
 import Header from "../components/Header";
+import { Avatar, Button } from "react-native-paper";
 import SearchModal from "../components/SearchModal";
 import ProductCard from "../components/ProductCard";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Footer from "../components/Footer";
+import Heading from "../components/Heading";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../redux/actions/productActions";
+import { useSetCategories } from "../utils/hooks";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
-export const categories = [
-  { category: "Shirt", _id: "jsad-123123-dsafdf" },
-  { category: "Pants", _id: "ggas-46643-gjgjsd" },
-  { category: "Jeans", _id: "dnbcvn-435346-utkgh" },
-  { category: "Shoes", _id: "vbnvbn-546546-xvxcv" },
-  { category: "Jacket", _id: "hsxzz-8568-asdfgjh" },
-  { category: "Socks", _id: "idsf-55634-cxvtrt" },
-  { category: "Glasses", _id: "xzcyki-7344-ouyadds" },
-  { category: "Hat", _id: "ykjdwwer-63243-htku" },
-  { category: "Gloves", _id: "qweqwre-5465-lyuksdf" },
-];
-export const products = [
-  {
-    price: 400000,
-    stock: 23,
-    name: "ReactJs",
-    category: "jsad-123123-dsafdf",
-    _id: "0768665asdasd63423",
-    images: [
-      {
-        url: "https://cdn1.iconfinder.com/data/icons/programing-development-8/24/react_logo-512.png",
-      },
-    ],
-  },
-  {
-    price: 200000,
-    stock: 23,
-    name: "NestJs",
-    category: "ggas-46643-gjgjsd",
-    _id: "0768655asdasd63423",
-    images: [
-      {
-        url: "https://static-00.iconduck.com/assets.00/nestjs-icon-2048x2040-3rrvcej8.png",
-      },
-    ],
-  },
-];
 const Home = () => {
+  const [category, setCategory] = useState("");
+  const [activeSearch, setActiveSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categories, setCategories] = useState([]);
+
   const navigate = useNavigation();
+  const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+
+  const { products } = useSelector((state) => state.product);
 
   const categoryButtonHandler = (id) => {
     setCategory(id);
   };
+  const addToCardHandler = (id, name, price, image, stock) => {
+    if (stock === 0)
+      return Toast.show({
+        type: "error",
+        text1: "Out Of Stock",
+      });
+    dispatch({
+      type: "addToCart",
+      payload: {
+        product: id,
+        name,
+        price,
+        image,
+        stock,
+        quantity: 1,
+      },
+    });
+    Toast.show({
+      type: "success",
+      text1: "Added To Cart",
+    });
+  };
 
-  const addToCardHandler = (id) => {
-    console.log("Add to Cart", id);
-  }
-  const [category, setCategory] = useState("");
-  const [activeSearch, setActiveSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  useSetCategories(setCategories, isFocused);
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      dispatch(getAllProducts(searchQuery, category));
+    }, 500);
+
+    return () => {
+      clearTimeout(timeOutId);
+    };
+  }, [dispatch, searchQuery, category, isFocused]);
+
   return (
     <>
       {activeSearch && (
@@ -70,7 +74,6 @@ const Home = () => {
         />
       )}
       <View style={defaultStyle}>
-        {/* Cart Icon */}
         <Header />
 
         {/* Heading Row */}
@@ -86,6 +89,7 @@ const Home = () => {
           <Heading text1="Our" text2="Products" />
 
           {/* Search Bar */}
+
           <View>
             <TouchableOpacity onPress={() => setActiveSearch((prev) => !prev)}>
               <Avatar.Icon
@@ -99,6 +103,7 @@ const Home = () => {
         </View>
 
         {/* Categories */}
+
         <View
           style={{
             flexDirection: "row",
@@ -107,10 +112,10 @@ const Home = () => {
         >
           <ScrollView
             horizontal
-            showsHorizontalScrollIndicator={false}
             contentContainerStyle={{
               alignItems: "center",
             }}
+            showsHorizontalScrollIndicator={false}
           >
             {categories.map((item, index) => (
               <Button
@@ -136,7 +141,8 @@ const Home = () => {
           </ScrollView>
         </View>
 
-        {/* Products Card */}
+        {/* Products */}
+
         <View style={{ flex: 1 }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {products.map((item, index) => (
@@ -156,8 +162,7 @@ const Home = () => {
         </View>
       </View>
 
-      {/* Footer */}
-      <Footer activeRoute={"home"}/>
+      <Footer activeRoute={"home"} />
     </>
   );
 };

@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { useSelector } from "react-redux";
 import { loadUser } from "../redux/actions/userActions";
-import { server } from "../redux/store";
-// import { getAdminProducts } from "../redux/actions/productAction";
+import { getAdminProducts } from "../redux/actions/productActions";
 
 export const useMessageAndErrorUser = (
   navigation,
@@ -80,71 +79,71 @@ export const useMessageAndErrorOther = (
   return loading;
 };
 
-// export const useSetCategories = (setCategories, isFocused) => {
-//   useEffect(() => {
-//     axios
-//       .get(`${server}/product/categories`)
-//       .then((res) => {
-//         setCategories(res.data.categories);
-//       })
-//       .catch((e) => {
-//         Toast.show({
-//           type: "error",
-//           text1: e.response.data.message,
-//         });
-//       });
-//   }, [isFocused]);
-// };
+export const useSetCategories = (setCategories, isFocused) => {
+  useEffect(() => {
+    axios
+      .get(`product/categories`)
+      .then((res) => {
+        setCategories(res.data.categories);
+      })
+      .catch((e) => {
+        Toast.show({
+          type: "error",
+          text1: e.response.data.message,
+        });
+      });
+  }, [isFocused]);
+};
 
-// export const useGetOrders = (isFocused, isAdmin = false) => {
-//   const [orders, setOrders] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   useEffect(() => {
-//     setLoading(true);
-//     axios
-//       .get(`${server}/order/${isAdmin ? "admin" : "my"}`)
-//       .then((res) => {
-//         setOrders(res.data.orders);
-//         setLoading(false);
-//       })
-//       .catch((e) => {
-//         Toast.show({
-//           type: "error",
-//           text1: e.response.data.message,
-//         });
-//         setLoading(false);
-//       });
-//   }, [isFocused]);
+export const useGetOrders = (isFocused, isAdmin = false) => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`order/${isAdmin ? "admin" : "my"}`)
+      .then((res) => {
+        setOrders(res.data.orders);
+        setLoading(false);
+      })
+      .catch((e) => {
+        Toast.show({
+          type: "error",
+          text1: e.response.data.message,
+        });
+        setLoading(false);
+      });
+  }, [isFocused]);
 
-//   return {
-//     loading,
-//     orders,
-//   };
-// };
+  return {
+    loading,
+    orders,
+  };
+};
 
-// export const useAdminProducts = (dispatch, isFocused) => {
-//   const { products, inStock, outOfStock, error, loading } = useSelector(
-//     (state) => state.product
-//   );
+export const useAdminProducts = (dispatch, isFocused) => {
+  const { products, inStock, outOfStock, error, loading } = useSelector(
+    (state) => state.product
+  );
 
-//   useEffect(() => {
-//     if (error) {
-//       Toast.show({
-//         type: "error",
-//         text1: error,
-//       });
-//       dispatch({
-//         type: "clearError",
-//       });
-//     }
+  useEffect(() => {
+    if (error) {
+      Toast.show({
+        type: "error",
+        text1: error,
+      });
+      dispatch({
+        type: "clearError",
+      });
+    }
 
-//     dispatch(getAdminProducts());
-//   }, [dispatch, isFocused, error]);
+    dispatch(getAdminProducts());
+  }, [dispatch, isFocused, error]);
 
-//   return {
-//     products,
-//     inStock,
-//     outOfStock,
-//     loading,
-//   };
-// };
+  return {
+    products,
+    inStock,
+    outOfStock,
+    loading,
+  };
+};

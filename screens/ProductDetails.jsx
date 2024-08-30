@@ -8,10 +8,13 @@ import {
 } from "react-native";
 import { defaultStyle, colors } from "../styles/styles";
 import { Avatar, Button } from "react-native-paper";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import Header from "../components/Header";
 import Carousel from "react-native-snap-carousel";
+import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import { getProductDetails } from "../redux/actions/productActions";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
@@ -26,29 +29,14 @@ export const iconOptions = {
 };
 
 const ProductDetails = ({ route: { params } }) => {
-  const images = [
-    {
-      id: "089708234qwdasd",
-      url: "https://cdn1.iconfinder.com/data/icons/programing-development-8/24/react_logo-512.png",
-    },
-    {
-      id: "823647325asdxzczxc",
-      url: "https://w7.pngwing.com/pngs/359/101/png-transparent-aperture-laboratories-science-technology-laboratory-portal-science-blue-text-computer-thumbnail.png",
-    },
-  ];
-  
-  const name = "ReactJs";
-
-  const price = 400000;
-
-  const description =
-    "A frontend web development tool that can make your website looks awesome";
-
-  const stock = 5;
+  const {
+    product: { name, price, stock, description, images },
+  } = useSelector((state) => state.product);
 
   const isCarousel = useRef(null);
-
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
   const incrementQty = () => {
     if (stock <= quantity)
@@ -69,11 +57,27 @@ const ProductDetails = ({ route: { params } }) => {
         type: "error",
         text1: "Out Of Stock",
       });
+    dispatch({
+      type: "addToCart",
+      payload: {
+        product: params.id,
+        name,
+        price,
+        image: images[0]?.url,
+        stock,
+        quantity,
+      },
+    });
     Toast.show({
       type: "success",
       text1: "Added To Cart",
     });
   };
+
+  useEffect(() => {
+    dispatch(getProductDetails(params.id));
+  }, [dispatch, params.id, isFocused]);
+
   return (
     <View
       style={{
@@ -85,14 +89,18 @@ const ProductDetails = ({ route: { params } }) => {
       <Header back={true} />
 
       {/* Carousel */}
-      <Carousel
-        layout="stack"
-        sliderWidth={SLIDER_WIDTH}
-        itemWidth={ITEM_WIDTH}
-        ref={isCarousel}
-        data={images}
-        renderItem={CarouselCardItem}
-      />
+      {images && images.length > 0 ? (
+        <Carousel
+          layout="stack"
+          sliderWidth={SLIDER_WIDTH}
+          itemWidth={ITEM_WIDTH}
+          ref={isCarousel}
+          data={images}
+          renderItem={CarouselCardItem}
+        />
+      ) : (
+        <Text>Loading images...</Text> // Or any other fallback UI
+      )}
 
       {/* Bottom of carousel */}
       <View

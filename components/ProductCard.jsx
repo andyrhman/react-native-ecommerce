@@ -20,8 +20,8 @@ const ProductCard = ({
     >
       <View
         style={{
-          elevation: 5,
-          width: 220,
+          elevation: 15,
+          width: 250,
           alignItems: "center",
           justifyContent: "space-between",
           margin: 20,
@@ -31,7 +31,9 @@ const ProductCard = ({
         }}
       >
         <Image
-          source={{ uri: image }}
+          source={{
+            uri: image,
+          }}
           style={{
             width: "100%",
             height: 200,
@@ -41,6 +43,7 @@ const ProductCard = ({
             top: 105,
           }}
         />
+
         <View
           style={{
             flexDirection: "row",
@@ -53,21 +56,23 @@ const ProductCard = ({
             numberOfLines={2}
             style={{
               color: i % 2 === 0 ? colors.color2 : colors.color3,
-              fontSize: 20,
+              fontSize: 25,
               fontWeight: "300",
+              width: "60%",
             }}
           >
             {name}
           </Text>
+
           <Text
             numberOfLines={2}
             style={{
               color: i % 2 === 0 ? colors.color2 : colors.color3,
-              fontSize: 14,
+              fontSize: 20,
               fontWeight: "700",
             }}
           >
-            Rp{price}
+            ₹{price}
           </Text>
         </View>
 
@@ -75,13 +80,14 @@ const ProductCard = ({
           style={{
             backgroundColor: i % 2 === 0 ? colors.color2 : colors.color3,
             borderRadius: 0,
+            paddingVertical: 5,
             borderBottomRightRadius: 20,
             borderBottomLeftRadius: 20,
             width: "100%",
           }}
         >
           <Button
-            onPress={() => addToCardHandler(id, stock)}
+            onPress={() => addToCardHandler(id, name, price, image, stock)}
             textColor={i % 2 === 0 ? colors.color1 : colors.color2}
           >
             Add To Cart

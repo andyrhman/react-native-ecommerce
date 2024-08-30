@@ -1,35 +1,19 @@
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
+import { colors, defaultStyle } from "../styles/styles";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
-import CartItem from "../components/CartItem";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import { colors, defaultStyle } from "../styles/styles";
 import { Button } from "react-native-paper";
+import CartItem from "../components/CartItem";
 import { useNavigation } from "@react-navigation/native";
-
-export const cartItems = [
-  {
-    name: "ReactJs",
-    product: "0768665asdasd63423",
-    image:
-      "https://cdn1.iconfinder.com/data/icons/programing-development-8/24/react_logo-512.png",
-    stock: 3,
-    price: 40000,
-    quantity: 2,
-  },
-  {
-    name: "NestJs",
-    product: "823647325asdxzczxc",
-    image:
-      "https://static-00.iconduck.com/assets.00/nestjs-icon-2048x2040-3rrvcej8.png",
-    stock: 2,
-    price: 20000,
-    quantity: 1,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 const Cart = () => {
   const navigate = useNavigation();
+  const dispatch = useDispatch();
+
+  const { cartItems } = useSelector((state) => state.cart);
 
   const incrementHandler = (id, name, price, image, stock, quantity) => {
     const newQty = quantity + 1;
@@ -38,17 +22,17 @@ const Cart = () => {
         type: "error",
         text1: "Maximum value added",
       });
-    // dispatch({
-    //   type: "addToCart",
-    //   payload: {
-    //     product: id,
-    //     name,
-    //     price,
-    //     image,
-    //     stock,
-    //     quantity: newQty,
-    //   },
-    // });
+    dispatch({
+      type: "addToCart",
+      payload: {
+        product: id,
+        name,
+        price,
+        image,
+        stock,
+        quantity: newQty,
+      },
+    });
   };
 
   const decrementHandler = (id, name, price, image, stock, quantity) => {
@@ -56,20 +40,25 @@ const Cart = () => {
 
     if (1 >= quantity) return dispatch({ type: "removeFromCart", payload: id });
 
-    // dispatch({
-    //   type: "addToCart",
-    //   payload: {
-    //     product: id,
-    //     name,
-    //     price,
-    //     image,
-    //     stock,
-    //     quantity: newQty,
-    //   },
-    // });
+    dispatch({
+      type: "addToCart",
+      payload: {
+        product: id,
+        name,
+        price,
+        image,
+        stock,
+        quantity: newQty,
+      },
+    });
   };
   return (
-    <View style={{ ...defaultStyle, padding: 0 }}>
+    <View
+      style={{
+        ...defaultStyle,
+        padding: 0,
+      }}
+    >
       {/* Header */}
       <Header back={true} emptyCart={true} />
 
@@ -80,7 +69,6 @@ const Cart = () => {
         containerStyle={{ paddingTop: 70, marginLeft: 35 }}
       />
 
-      {/* Cart Items */}
       <View
         style={{
           paddingVertical: 20,
@@ -112,7 +100,6 @@ const Cart = () => {
         </ScrollView>
       </View>
 
-      {/* Cart Items Length */}
       <View
         style={{
           flexDirection: "row",
@@ -120,23 +107,20 @@ const Cart = () => {
           paddingHorizontal: 35,
         }}
       >
-        {/* <Text>{cartItems.length} Items</Text>
+        <Text>{cartItems.length} Items</Text>
         <Text>
           ₹
           {cartItems.reduce(
             (prev, curr) => prev + curr.quantity * curr.price,
             0
           )}
-        </Text> */}
-        <Text>5 Items</Text>
-        <Text>Rp5000</Text>
+        </Text>
       </View>
 
-      {/* Checkout button */}
       <TouchableOpacity
-      onPress={
-        cartItems.length > 0 ? () => navigate.navigate("confirmorder") : null
-      }
+        onPress={
+          cartItems.length > 0 ? () => navigate.navigate("confirmorder") : null
+        }
       >
         <Button
           style={{

@@ -40,10 +40,14 @@ const AdminPanel = ({ navigation }) => {
   };
 
   const deleteProductHandler = (id) => {
-    dispatch(deleteProduct(id));
-    // setTimeout(() => {
-    //   navigation.push("adminpanel")
-    // }, 3000);
+    try {
+      dispatch(deleteProduct(id));
+      setTimeout(() => {
+        navigation.push("adminpanel")
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const loadingDelete = useMessageAndErrorOther(

@@ -9,19 +9,18 @@ import {
 } from "../styles/styles";
 import { Button, TextInput } from "react-native-paper";
 import Footer from "../components/Footer";
-// import { useDispatch } from "react-redux";
-// import { forgetPassword } from "../redux/actions/otherAction";
-// import { useMessageAndErrorOther } from "../utils/hooks";
+import { useDispatch } from "react-redux";
+import { forgetPassword } from "../redux/actions/otherActions";
+import { useMessageAndErrorOther } from "../utils/hooks";
 
 const ForgetPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-//   const loading = useMessageAndErrorOther(dispatch, navigation, "verify");
+  const loading = useMessageAndErrorOther(dispatch, navigation, "verify");
 
   const submitHandler = () => {
-    alert("H");
-    // dispatch(forgetPassword(email));
+    dispatch(forgetPassword(email));
     navigation.navigate("verify");
   };
   return (
@@ -42,8 +41,8 @@ const ForgetPassword = ({ navigation }) => {
           />
 
           <Button
-            // loading={loading}
-            labelStyle={{color: colors.color2}}
+            loading={loading}
+            labelStyle={{ color: colors.color2 }}
             disabled={email === ""}
             style={styles.btn}
             onPress={submitHandler}
